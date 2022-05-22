@@ -1,0 +1,20 @@
+﻿<Application x:Class="CMM.Management.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:local="clr-namespace:CMM.Management"
+             StartupUri="MainWindow.xaml">
+    <Application.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="Style/Color.xaml"/>
+                <ResourceDictionary Source="Images/icons.xaml"/>
+                <ResourceDictionary Source="Style/Slider.xaml"/>
+                <ResourceDictionary Source="Style/Btn.xaml"/>
+                <ResourceDictionary Source="Style/Main.xaml"/>
+                <ResourceDictionary Source="Style/MonCtrlStyle.xaml"/>
+                <ResourceDictionary Source="Style/MonitorsControlStyle.xaml"/>
+                <ResourceDictionary Source="/Language;component/StringResources.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Application.Resources>
+</Application>

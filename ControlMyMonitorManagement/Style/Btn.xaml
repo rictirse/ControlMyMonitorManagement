@@ -1,0 +1,59 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <Style x:Key="ImageButton" TargetType="{x:Type ButtonBase}" BasedOn="{x:Null}">
+        <Setter Property="FocusVisualStyle" Value="{x:Null}" />
+        <Style.Triggers>
+            <Trigger Property="IsEnabled" Value="false">
+                <Setter Property="Foreground" Value="{StaticResource DisabledForegroundBrush}"/>
+            </Trigger>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="Cursor" Value="Hand" />
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
+    <Style x:Key="GeometryButton" TargetType="{x:Type ButtonBase}" BasedOn="{StaticResource ImageButton}">
+        <Setter Property="Foreground" Value="White" />
+        <Style.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="Foreground" Value="{StaticResource H1}"/>
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
+    <!--Btn Cancel-->
+    <Style x:Key="CancelButton" TargetType="{x:Type ButtonBase}" BasedOn="{StaticResource GeometryButton}">
+        <Setter Property="Margin" Value="3,0,0,0"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+                    <Border>
+                        <Grid Background="{StaticResource AlphaBrush}">
+                            <Path Style="{StaticResource PathCancel}"/>
+                            <Path Style="{StaticResource PathFrame}"/>
+                        </Grid>
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!--Btn Minimized-->
+    <Style x:Key="MinimizedButton" TargetType="{x:Type ButtonBase}" BasedOn="{StaticResource GeometryButton}">
+        <Setter Property="Margin" Value="3,0,0,0"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+                    <Border>
+                        <Grid Background="{StaticResource AlphaBrush}">
+                            <Path Style="{StaticResource PathMinimized}"/>
+                            <Path Style="{StaticResource PathFrame}"/>
+                        </Grid>
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+</ResourceDictionary>

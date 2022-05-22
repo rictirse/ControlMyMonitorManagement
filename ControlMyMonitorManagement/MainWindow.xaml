@@ -1,0 +1,38 @@
+﻿<Window x:Class="CMM.Management.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:ctrl="clr-namespace:CMM.Management.Control"
+        xmlns:local="clr-namespace:CMM.Management"
+        mc:Ignorable="d"
+        Title="ControlMyMonitor Management" 		    
+        Background="#666C6161"
+		AllowsTransparency="True"
+        ResizeMode="CanResizeWithGrip"
+		WindowStyle="None"
+		BorderThickness="3"
+		BorderBrush="Gray"
+		WindowStartupLocation="CenterScreen"
+        Loaded="Window_Loaded" Closing="Window_Closing" MaxWidth="800" ScrollViewer.VerticalScrollBarVisibility="Disabled" UseLayoutRounding="False" MinWidth="550" MinHeight="310">
+    
+    <Grid x:Name="MianGrid">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="30"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="50"/>
+        </Grid.RowDefinitions>
+        <Border Background="#33000000" Grid.Row="2"/>
+        <Border MouseLeftButtonDown="move" Background="#00000000" Grid.RowSpan="3"/>
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="5">
+            <Button Click="Btn_Click" Tag="Minimized" Style="{StaticResource MinimizedButton}"/>
+            <Button Click="Btn_Click" Tag="Exit" Style="{StaticResource CancelButton}"/>
+        </StackPanel>
+        <ctrl:MonitorsControl Monitors="{Binding Monitors}" Grid.Row="1"/>
+
+        <!--最下層Loading頁面阻擋-->
+        <Border x:Name="loading" Background="#00000000" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.RowSpan="3" Visibility="Hidden">
+            <ctrl:Loading  />
+        </Border>
+    </Grid>
+</Window>

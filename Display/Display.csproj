@@ -1,0 +1,32 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<TargetFramework>net6.0-windows</TargetFramework>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<RootNamespace>CMM.Display</RootNamespace>
+		<Product>ControlMyMonitorManagement</Product>
+		<UseWPF>true</UseWPF>
+		<Company>Dang</Company>
+		<Copyright>Copyright © DangWang $([System.DateTime]::Now.ToString(yyyy))</Copyright>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)'=='Release'">
+		<Major>1</Major>
+		<Minor>0</Minor>
+		<ProjectStartedDate>$([System.DateTime]::op_Subtraction($([System.DateTime]::get_Now().get_Date()),$([System.DateTime]::new(2017,9,17))).get_TotalDays())</ProjectStartedDate>
+		<DaysSinceProjectStarted>$([System.DateTime]::Now.ToString(Hmm))</DaysSinceProjectStarted>
+		<DateTimeSuffix>$([System.DateTime]::Now.ToString(yyyyMMdd))</DateTimeSuffix>
+		<VersionSuffix>$(Major).$(Minor).$(ProjectStartedDate).$(DaysSinceProjectStarted)</VersionSuffix>
+		<AssemblyVersion Condition=" '$(DateTimeSuffix)' == '' ">0.0.0.1</AssemblyVersion>
+		<AssemblyVersion Condition=" '$(DateTimeSuffix)' != '' ">$(VersionSuffix)</AssemblyVersion>
+		<Version Condition=" '$(DateTimeSuffix)' == '' ">0.0.0.1</Version>
+		<Version Condition=" '$(DateTimeSuffix)' != '' ">$(DateTimeSuffix)</Version>
+	</PropertyGroup>
+
+	<ItemGroup>
+	  <Folder Include="Converter\" />
+	  <Folder Include="Form\" />
+	  <Folder Include="View\" />
+	</ItemGroup>
+
+</Project>
