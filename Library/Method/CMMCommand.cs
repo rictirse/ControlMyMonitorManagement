@@ -2,6 +2,8 @@
 using CMM.Library.Helpers;
 using CMM.Library.ViewModel;
 using System.IO;
+using System.Net.NetworkInformation;
+using System.Threading;
 
 namespace CMM.Library.Method;
 
@@ -13,7 +15,6 @@ public static class CMMCommand
     static readonly string CMMTmpFolder = Path.Combine(Path.GetTempPath(), $"CMM");
     static readonly string CMMexe       = Path.Combine(CMMTmpFolder, "ControlMyMonitor.exe");
     static readonly string CMMsMonitors = Path.Combine(CMMTmpFolder, "smonitors.tmp");
-    static readonly string CMMcfg       = Path.Combine(CMMTmpFolder, "ControlMyMonitor.cfg");
 
     public static async Task ScanMonitor()
     {
@@ -21,80 +22,92 @@ public static class CMMCommand
         await ConsoleHelper.CmdCommandAsync($"{CMMexe} /smonitors {CMMsMonitors}");
     }
 
-    public static async Task PowerOn(string MonitorSn)
+    public static Task PowerOn(string monitorSN)
     { 
-        await ConsoleHelper.CmdCommandAsync($"{CMMexe} /SetValue {MonitorSn} D6 1");
+        return ConsoleHelper.CmdCommandAsync($"{CMMexe} /SetValue {monitorSN} D6 1");
     }
 
-    public static async Task Sleep(string MonitorSn)
+    public static Task Sleep(string monitorSN)
     {
-        await ConsoleHelper.CmdCommandAsync($"{CMMexe} /SetValue {MonitorSn} D6 4");
+        return ConsoleHelper.CmdCommandAsync($"{CMMexe} /SetValue {monitorSN} D6 4");
     }
 
-    public static async Task ScanMonitorInterfaces(IEnumerable<XMonitor> monitors)
+    private static async Task<string> GetMonitorValue(string monitorSN)
     {
-        var taskList = new List<Task>();
-        foreach (var mon in monitors)
+        var cmdFileName = Path.Combine(CMMTmpFolder, $"{Guid.NewGuid()}.bat");
+        var cmd = $"{CMMexe} /GetValue {monitorSN} D6\r\n" +
+                  $"echo %errorlevel%";
+        File.WriteAllText(cmdFileName, cmd);
+        var values = await ConsoleHelper.ExecuteCommand(cmdFileName);
+        File.Delete(cmdFileName);
+        return values.Split("\r\n", StringSplitOptions.RemoveEmptyEntries).LastOrDefault();
+    }
+
+    public static async Task<string> GetMonPowerStatus(string monitorSN)
+    {
+        var status = await GetMonitorValue(monitorSN);
+
+        return status switch
         {
-            taskList.Add(Task.Run(async () => await
-                ScanMonitorInterfaces($"{CMMTmpFolder}\\{mon.SerialNumber}.tmp", mon)));
-        }
-
-        await Task.WhenAll(taskList.ToArray());
+            "1" => "PowerOn",
+            "4" => "Sleep",
+            "5" => "PowerOff",
+            _ => string.Empty
+        };
     }
 
-    static async Task ScanMonitorInterfaces(string savePath, XMonitor mon)
+    public static async Task ScanMonitorStatus(IEnumerable<XMonitor> monitors)
     {
-        await ConsoleHelper.CmdCommandAsync($"{CMMexe} /scomma {savePath} {mon.MonitorID}");
-        await mon.ReadMonitorStatus(savePath);
+        var taskList = monitors.Select(x =>
+        {
+            return ScanMonitorStatus($"{CMMTmpFolder}\\{x.SerialNumber}.tmp", x);
+        });
+
+        await Task.WhenAll(taskList);
+    }
+
+    static async Task ScanMonitorStatus(string savePath, XMonitor mon)
+    {
+        await ConsoleHelper.CmdCommandAsync($"{CMMexe} /sjson {savePath} {mon.MonitorID}");
+        var monitorModel = JsonHelper.JsonFormFile<IEnumerable<SMonitorModel>>(savePath);
+
+        var status = monitorModel.ReadMonitorStatus();
+
+        mon.Status = new ObservableRangeCollection<XMonitorStatus>(status);
     }
 
     /// <summary>
     /// 取得螢幕狀態
     /// </summary>
-    public static async Task ReadMonitorStatus(this XMonitor @this, string filePath)
+    public static IEnumerable<XMonitorStatus> ReadMonitorStatus(this IEnumerable<SMonitorModel> monitorModel)
     {
-        var statusColle = new ObservableRangeCollection<XMonitorStatus>();
-
-        if (!File.Exists(filePath)) return;
-
-        foreach (var line in await File.ReadAllLinesAsync(filePath))
-        {
-            var sp = line.Split(",");
-            if (sp.Length < 6) continue;
-            
-            statusColle.Add(new XMonitorStatus
+        foreach (var m in monitorModel)
+        {       
+            yield return new XMonitorStatus
             {
-                VCP_Code       = StrTrim(sp[0]),
-                VCPCodeName    = StrTrim(sp[1]),
-                Read_Write     = StrTrim(sp[2]),
-                CurrentValue   = TryGetInt(sp[3]),
-                MaximumValue   = TryGetInt(sp[4]),
-                PossibleValues = TryGetArrStr(sp),
-            });
+                VCP_Code = m.VCPCode,
+                VCPCodeName = m.VCPCodeName,
+                Read_Write = m.ReadWrite,
+                CurrentValue = TryGetInt(m.CurrentValue),
+                MaximumValue = TryGetInt(m.MaximumValue),
+                PossibleValues = TryGetArrStr(m.PossibleValues),
+            };
         }
 
-        @this.Status = statusColle;
-
-        string StrTrim(string str)
+        IEnumerable<int> TryGetArrStr(string str)
         {
-            if (string.IsNullOrEmpty(str)) return null;
-            return str;
-        }
-
-        string TryGetArrStr(string[] strArr)
-        {
-            if (strArr.Length < 7) return null;
-
-            var outStr = string.Join(",", strArr[5..]);
-            outStr = outStr.Substring(1, outStr.Length - 2);
-            return outStr;
+            return str.Split(",", StringSplitOptions.RemoveEmptyEntries)
+                .Select(x => TryGetInt(x))
+                .Where(x => x != null)
+                .Select(x => (int)x)
+                .ToList();
         }
 
         int? TryGetInt(string str)
         {
-            if (int.TryParse(str, out var value)) return value;
-            return null;
+            return int.TryParse(str, out var value)
+                ? value
+                : null;
         }
     }
 

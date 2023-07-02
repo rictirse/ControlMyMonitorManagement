@@ -6,15 +6,16 @@
         xmlns:tb="clr-namespace:Hardcodet.Wpf.TaskbarNotification;assembly=Hardcodet.Wpf.TaskbarNotification.Net6"
         xmlns:local="clr-namespace:DellMonitorControl"
         mc:Ignorable="d"
+        Loaded="Window_Loaded"
         Title="MainWindow" Height="450" Width="800">
     
     <Grid>
         <tb:TaskbarIcon x:Name="taskbar"
                         IconSource="/DellLogo.ico"
-                        ToolTipText="調整效能"
+                        ToolTipText="螢幕開關"
                         PopupActivation="LeftOrDoubleClick">
             <tb:TaskbarIcon.TrayPopup>
-                <local:ControlPanel/>
+                <local:ControlPanel x:Name="comtrolPanel"/>
             </tb:TaskbarIcon.TrayPopup>
         </tb:TaskbarIcon>
     </Grid>

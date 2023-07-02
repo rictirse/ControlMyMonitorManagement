@@ -11,7 +11,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Language", "Language\Langua
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tester", "Tester\Tester.csproj", "{0D34DD73-3282-40EB-8F59-DF190944BF12}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DellMonitorControl", "DellMonitorControl\DellMonitorControl.csproj", "{64E96610-D431-40B9-A00B-55CE195B4B58}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DellMonitorControl", "DellMonitorControl\DellMonitorControl.csproj", "{64E96610-D431-40B9-A00B-55CE195B4B58}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CMMService", "CMMService\CMMService.csproj", "{FEA2B019-32BC-4704-939F-1CD26F373F55}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CMMModel", "CMMModel\CMMModel.csproj", "{88440737-DB6E-4ACA-B1BC-E40350153F96}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -39,6 +43,14 @@ Global
 		{64E96610-D431-40B9-A00B-55CE195B4B58}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{64E96610-D431-40B9-A00B-55CE195B4B58}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{64E96610-D431-40B9-A00B-55CE195B4B58}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FEA2B019-32BC-4704-939F-1CD26F373F55}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FEA2B019-32BC-4704-939F-1CD26F373F55}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FEA2B019-32BC-4704-939F-1CD26F373F55}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FEA2B019-32BC-4704-939F-1CD26F373F55}.Release|Any CPU.Build.0 = Release|Any CPU
+		{88440737-DB6E-4ACA-B1BC-E40350153F96}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{88440737-DB6E-4ACA-B1BC-E40350153F96}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{88440737-DB6E-4ACA-B1BC-E40350153F96}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{88440737-DB6E-4ACA-B1BC-E40350153F96}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

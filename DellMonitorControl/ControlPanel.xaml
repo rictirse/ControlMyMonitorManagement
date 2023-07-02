@@ -7,21 +7,8 @@
              mc:Ignorable="d">
     <Grid>
         <Border  Background="{DynamicResource H3}" CornerRadius="10" MouseLeave="Border_MouseLeave"/>
-        <StackPanel>
-            
-            <StackPanel Orientation="Vertical" Margin="10,5,5,0">
-                <TextBlock Text="DELL U3223QE (Center)" Style="{StaticResource TitleStyle}" HorizontalAlignment="Left"/>
-                <Button Tag="BR974P3" Content="Sleep" Click="ToggleButton_Checked" Style="{StaticResource TextButtonStyle}"/>
-            </StackPanel>
-            <StackPanel Orientation="Vertical" Margin="10,5,5,0">
-                <TextBlock Text="DELL U3223QE (Right)" Style="{StaticResource TitleStyle}" HorizontalAlignment="Left"/>
-                <Button Tag="CBBP3P3" Content="Sleep" Click="ToggleButton_Checked" Style="{StaticResource TextButtonStyle}"/>
-            </StackPanel>
-            <StackPanel Orientation="Vertical" Margin="10,5,5,0">
-                <TextBlock Text="DELL UP2716D (Left)" Style="{StaticResource TitleStyle}" HorizontalAlignment="Left"/>
-                <Button Tag="KV97067ICLCL" Content="Sleep" Click="ToggleButton_Checked" Style="{StaticResource TextButtonStyle}"/>
+        <StackPanel Name="sp" Margin="10">
 
-            </StackPanel>
         </StackPanel>
     </Grid>
 </UserControl>

@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
-		<TargetFramework>net6.0</TargetFramework>
+		<TargetFramework>net7.0-windows</TargetFramework>
 		<ImplicitUsings>enable</ImplicitUsings>
 		<RootNamespace>CMM.Tester</RootNamespace>
 		<Product>ControlMyMonitorManagement</Product>
@@ -16,6 +16,14 @@
 		<PackageReference Include="NUnit3TestAdapter" Version="4.2.1" />
 		<PackageReference Include="NUnit.Analyzers" Version="3.3.0" />
 		<PackageReference Include="coverlet.collector" Version="3.1.2" />
+	</ItemGroup>
+
+
+	<ItemGroup>
+		<ProjectReference Include="..\CMMModel\CMMModel.csproj" />
+		<ProjectReference Include="..\CMMService\CMMService.csproj" />
+		<ProjectReference Include="..\Language\Language.csproj" />
+		<ProjectReference Include="..\Library\Library.csproj" />
 	</ItemGroup>
 
 </Project>

@@ -2,12 +2,27 @@
 
 	<PropertyGroup>
 		<OutputType>WinExe</OutputType>
-		<TargetFramework>net6.0-windows</TargetFramework>
+		<TargetFramework>net7.0-windows</TargetFramework>
 		<Nullable>enable</Nullable>
 		<AssemblyName>DellMonitorControl</AssemblyName>
 		<RootNamespace>DellMonitorControl</RootNamespace>
-		<Product>DellMonitorControl</Product>
+		<Product>ControlMyMonitorManagement</Product>
 		<UseWPF>true</UseWPF>
+		<Company>Dang</Company>
+		<Copyright>Copyright © DangWang $([System.DateTime]::Now.ToString(yyyy))</Copyright>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)'=='Release'">
+		<Major>1</Major>
+		<Minor>0</Minor>
+		<ProjectStartedDate>$([System.DateTime]::op_Subtraction($([System.DateTime]::get_Now().get_Date()),$([System.DateTime]::new(2023,7,2))).get_TotalDays())</ProjectStartedDate>
+		<DaysSinceProjectStarted>$([System.DateTime]::Now.ToString(Hmm))</DaysSinceProjectStarted>
+		<DateTimeSuffix>$([System.DateTime]::Now.ToString(yyyyMMdd))</DateTimeSuffix>
+		<VersionSuffix>$(Major).$(Minor).$(ProjectStartedDate).$(DaysSinceProjectStarted)</VersionSuffix>
+		<AssemblyVersion Condition=" '$(DateTimeSuffix)' == '' ">0.0.0.1</AssemblyVersion>
+		<AssemblyVersion Condition=" '$(DateTimeSuffix)' != '' ">$(VersionSuffix)</AssemblyVersion>
+		<Version Condition=" '$(DateTimeSuffix)' == '' ">0.0.0.1</Version>
+		<Version Condition=" '$(DateTimeSuffix)' != '' ">$(DateTimeSuffix)</Version>
 	</PropertyGroup>
 
 	<ItemGroup>
@@ -20,6 +35,12 @@
 
 	<ItemGroup>
 		<PackageReference Include="Hardcodet.Wpf.TaskbarNotification.Net6" Version="1.0.0" />
+		<PackageReference Include="Microsoft.Extensions.Configuration" Version="7.0.0" />
+		<PackageReference Include="Microsoft.Extensions.Configuration.UserSecrets" Version="7.0.0" />
+		<PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="7.0.0" />
+		<PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="7.0.0" />
+		<PackageReference Include="Microsoft.Extensions.Options" Version="7.0.0" />
+		<PackageReference Include="Microsoft.Extensions.Options.ConfigurationExtensions" Version="7.0.0" />
 	</ItemGroup>
 
 	<ItemGroup>

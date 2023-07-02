@@ -1,9 +1,4 @@
 ﻿using CMM.Library.Base;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace CMM.Library.ViewModel
 {
@@ -44,11 +39,11 @@ namespace CMM.Library.ViewModel
         }
         int? _MaximumValue;
 
-        public string PossibleValues
+        public IEnumerable<int> PossibleValues
         {
             get => _PossibleValues;
             set { SetProperty(ref _PossibleValues, value); }
         }
-        string _PossibleValues;
+        IEnumerable<int> _PossibleValues;
     }
 }

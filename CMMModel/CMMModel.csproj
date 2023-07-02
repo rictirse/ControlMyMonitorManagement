@@ -1,12 +1,12 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
 		<TargetFramework>net7.0-windows</TargetFramework>
-		<ImplicitUsings>enable</ImplicitUsings>
-		<RootNamespace>CMM.Library</RootNamespace>
-		<AssemblyName>CMM.Library</AssemblyName>
+		<AssemblyName>CMM.Model</AssemblyName>
+		<RootNamespace>CMM.Model</RootNamespace>
 		<Product>ControlMyMonitorManagement</Product>
-		<UseWPF>true</UseWPF>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<Nullable>enable</Nullable>
 		<Company>Dang</Company>
 		<Copyright>Copyright © DangWang $([System.DateTime]::Now.ToString(yyyy))</Copyright>
 	</PropertyGroup>
@@ -24,18 +24,4 @@
 		<Version Condition=" '$(DateTimeSuffix)' != '' ">$(DateTimeSuffix)</Version>
 	</PropertyGroup>
 
-	<ItemGroup>
-	  <None Remove="Resource\ControlMyMonitor.exe" />
-	</ItemGroup>
-
-	<ItemGroup>
-	  <EmbeddedResource Include="Resource\ControlMyMonitor.exe">
-	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-	  </EmbeddedResource>
-	</ItemGroup>
-
-	<ItemGroup>
-	  <ProjectReference Include="..\CMMModel\CMMModel.csproj" />
-	  <ProjectReference Include="..\Language\Language.csproj" />
-	</ItemGroup>
 </Project>
