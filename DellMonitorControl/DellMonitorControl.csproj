@@ -1,0 +1,29 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<OutputType>WinExe</OutputType>
+		<TargetFramework>net6.0-windows</TargetFramework>
+		<Nullable>enable</Nullable>
+		<AssemblyName>DellMonitorControl</AssemblyName>
+		<RootNamespace>DellMonitorControl</RootNamespace>
+		<Product>DellMonitorControl</Product>
+		<UseWPF>true</UseWPF>
+	</PropertyGroup>
+
+	<ItemGroup>
+	  <None Remove="DellLogo.ico" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Resource Include="DellLogo.ico" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<PackageReference Include="Hardcodet.Wpf.TaskbarNotification.Net6" Version="1.0.0" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <ProjectReference Include="..\Library\Library.csproj" />
+	</ItemGroup>
+
+</Project>

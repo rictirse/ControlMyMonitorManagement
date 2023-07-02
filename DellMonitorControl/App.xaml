@@ -1,0 +1,17 @@
+﻿<Application x:Class="DellMonitorControl.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:local="clr-namespace:DellMonitorControl"
+             StartupUri="MainWindow.xaml">
+    <Application.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/Style/Color.xaml"/>
+                <ResourceDictionary Source="/Images/Icons.xaml"/>
+                <ResourceDictionary Source="/Style/Main.xaml"/>
+                <ResourceDictionary Source="/Style/Btn.xaml"/>
+                <ResourceDictionary Source="/Style/Slider.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Application.Resources>
+</Application>
