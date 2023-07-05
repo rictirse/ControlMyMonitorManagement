@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using System.Threading.Tasks;
+using System.Windows;
 
 namespace DellMonitorControl;
 
@@ -10,11 +11,12 @@ public partial class MainWindow : Window
     public MainWindow()
     {
         InitializeComponent();
+        this.Hide();
+        taskbar.TrayPopupOpen += async (s, e) => await Taskbar_TrayPopupOpen(s, e);
     }
 
-    private async void Window_Loaded(object sender, RoutedEventArgs e)
+    private async Task Taskbar_TrayPopupOpen(object sender, RoutedEventArgs e)
     {
-        this.Hide();
-        await comtrolPanel.Init();
+        await comtrolPanel.Refresh();
     }
 }

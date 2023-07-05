@@ -2,8 +2,6 @@
 using CMM.Library.Helpers;
 using CMM.Library.ViewModel;
 using System.IO;
-using System.Net.NetworkInformation;
-using System.Threading;
 
 namespace CMM.Library.Method;
 
@@ -32,15 +30,26 @@ public static class CMMCommand
         return ConsoleHelper.CmdCommandAsync($"{CMMexe} /SetValue {monitorSN} D6 4");
     }
 
-    private static async Task<string> GetMonitorValue(string monitorSN)
+    private static async Task<string> GetMonitorValue(string monitorSN, int? reTry = 0)
     {
-        var cmdFileName = Path.Combine(CMMTmpFolder, $"{Guid.NewGuid()}.bat");
-        var cmd = $"{CMMexe} /GetValue {monitorSN} D6\r\n" +
-                  $"echo %errorlevel%";
-        File.WriteAllText(cmdFileName, cmd);
-        var values = await ConsoleHelper.ExecuteCommand(cmdFileName);
-        File.Delete(cmdFileName);
-        return values.Split("\r\n", StringSplitOptions.RemoveEmptyEntries).LastOrDefault();
+        var value = string.Empty;
+        while (reTry <= 5)
+        {
+            var cmdFileName = Path.Combine(CMMTmpFolder, $"{Guid.NewGuid()}.bat");
+            var cmd = $"{CMMexe} /GetValue {monitorSN} D6\r\n" +
+                      $"echo %errorlevel%";
+            File.WriteAllText(cmdFileName, cmd);
+            var values = await ConsoleHelper.ExecuteCommand(cmdFileName);
+            File.Delete(cmdFileName);
+
+            value = values.Split("\r\n", StringSplitOptions.RemoveEmptyEntries).LastOrDefault();
+
+            if (!string.IsNullOrEmpty(value) && value != "0") return value;
+            await Task.Delay(500);
+            await GetMonitorValue(monitorSN, reTry++);
+        };
+
+        return value;
     }
 
     public static async Task<string> GetMonPowerStatus(string monitorSN)

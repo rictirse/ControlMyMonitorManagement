@@ -17,16 +17,16 @@ public partial class ControlPanel : UserControl
         InitializeComponent();
     }
 
-    public async Task Init()
+    public async Task Refresh()
     {
         await CMMCommand.ScanMonitor();
         var monitors = await CMMCommand.ReadMonitorsData();
+        sp.Children.Clear();
 
         foreach (var m in monitors)
         {
             var status = await CMMCommand.GetMonPowerStatus(m.SerialNumber);
             var ctrl = CreatControl(m, status);
-
             sp.Children.Add(ctrl);
         }
     }
@@ -40,7 +40,7 @@ public partial class ControlPanel : UserControl
 
         var tb = new TextBlock
         {
-            Text = monitorModel.MonitorName,
+            Text = $"{monitorModel.MonitorName}({monitorModel.SerialNumber})",
             HorizontalAlignment = HorizontalAlignment.Left,
             Style = (Style)FindResource("LableStyle")
         };
@@ -78,6 +78,7 @@ public partial class ControlPanel : UserControl
         {
             await CMMCommand.Sleep(tag);
         }
+
         await Task.Delay(1000);
         btn!.Content = await CMMCommand.GetMonPowerStatus(tag);
     }

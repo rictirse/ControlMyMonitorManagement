@@ -6,7 +6,6 @@
         xmlns:tb="clr-namespace:Hardcodet.Wpf.TaskbarNotification;assembly=Hardcodet.Wpf.TaskbarNotification.Net6"
         xmlns:local="clr-namespace:DellMonitorControl"
         mc:Ignorable="d"
-        Loaded="Window_Loaded"
         Title="MainWindow" Height="450" Width="800">
     
     <Grid>
